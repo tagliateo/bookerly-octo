@@ -39,19 +39,21 @@ Submit the assignment in MS Word or PDF file format. Your submission should cont
 This assignment will be assessed by your instructor using the rubric below
  */
 
-import textio.TextIO;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
     private Map<String, Integer> bookQuantity;
-    public LibrarySystem() {
+
+    public Main() {
         bookQuantity = new HashMap<>();
-        textIO = new TextIO();
+
     }
 
     public void menu(){
+        Scanner scanner = new Scanner(System.in);
+
         while(true){
             System.out.println("Welcome to the archives.");
             System.out.println("What would you like to do?");
@@ -60,62 +62,77 @@ public class Main {
             System.out.println("3) Return a book?");
             System.out.println("4) Exit?");
 
-            int selection = getSelection();
+            int selection = scanner.nextInt();
 
             switch (selection){
-                case 1 -> addBooks();
-                case 2 -> borrowBooks();
-                case 3 -> returnBooks();
-                case 4 -> System.out.println("exiting the program");return;
+                case 1 -> addBooks(scanner);
+                case 2 -> borrowBooks(scanner);
+                case 3 -> returnBooks(scanner);
+                case 4 -> {System.out.println("exiting the program");
+                    return;
+                }
                 default -> System.out.println("Im sorry, I didn't quite get that... try again");
             }
         }
     }
 
-    // handle user selection
-    private int getSelection(){
-        int selection;
-
-        while (true){
-            try {
-                selection = TextIO.getlnInt("Enter your choice: ");
-                if (selection < 1 || selection > 4){
-                    System.out.println("Im sorry, I didn't quite get that... try again");
-                } else {
-                    return selection;
-                }
-            } catch (Exception e){
-                System.out.println("Computer is hung up on thinking ... There appears to be a problem");
-            }
-        }
-    }
-
     // UPDATE
-    private void addBooks() {
+    private void addBooks(Scanner scanner) {
         /*
          For "Add Books": Prompt the user to enter the book title, author, and quantity.
         If the book already exists in the library, update the quantity.
         If the book is new, add it to the library.
          */
-
-
-        /* intitializing Getter and Setters    */
-
-        String title = getTitle();
-        String author = getAuthor();
-        int quantity = getQuantity();
-
         System.out.println("Add a book?");
-        userInput = TextIO.getlnWord();
 
+        System.out.println("Enter the books title:");
+        String title = scanner.next();
 
-//        books.add("hello");
+        System.out.println("Enter the authors name:");
+        String author  = scanner.next();
+
+        System.out.println("Enter the quantity:");
+        int quantity = scanner.nextInt();
+
+        if (bookQuantity.containsKey(title)){
+            int currentQuantity = bookQuantity.get(title);
+            bookQuantity.put(title, currentQuantity + quantity);
+            System.out.println("Book updated successfully!");
+        } else {
+            bookQuantity.put(title, quantity);
+            System.out.println("Book added successfully!");
+        }
+    }
+
+//    3.     For "Borrow Books":
+//
+//    Prompt the user to enter the book title and the number of books to borrow.
+//            Check if the requested number of books is available in the library.
+//    If the books are available, update the quantity and display a success message.
+//    If not, display an error message.
+
+    private void borrowBooks(Scanner scanner){
+        System.out.println("Enter the title and the number of books you wish to borrow:");
+
+        System.out.println("Enter the books title:");
+        String title = scanner.next();
+
+        System.out.println("Enter the quantity:");
+        int quantity = scanner.nextInt();
+
+        if (bookQuantity.containsKey(title)){
+            int currentQuantity = booksQuantity.get(title);
+                    books.get(quantity);
+            System.out.println();
+
+        } else {
+            // enter error book not found in the library
+        }
     }
 
 
     public static void main(String[] args) {
 
-        addBooks();
 
     }
 
