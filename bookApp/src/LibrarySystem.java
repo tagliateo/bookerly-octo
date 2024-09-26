@@ -2,8 +2,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import static java.lang.Integer.parseInt;
-
 public class LibrarySystem {
     private Map<String, Integer> bookQuantity;
 
@@ -23,32 +21,30 @@ public class LibrarySystem {
             System.out.println("5. Exit");
 
             System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
+            int choice = 0;
+            try {
+                choice = scanner.nextInt();
+            } catch (Exception e) {
+                throw new RuntimeException("THERE WAS AN ERROR.... PLEASE TRY AGAIN " + e);
+            }
 
             switch (choice) {
-                case 1:
-                    addBooks(scanner);
-                    break;
-                case 2:
-                    borrowBooks(scanner);
-                    break;
-                case 3:
-                    returnBooks(scanner);
-                    break;
-                case 4:
-                    getAllBooks(scanner);
-                    break;
-                case 5:
+                case 1 -> addBooks(scanner);
+                case 2 -> borrowBooks(scanner);
+                case 3 -> returnBooks(scanner);
+
+                case 4 -> getAllBooks(scanner);
+                case 5 -> {
                     System.out.println("Exiting the program...");
                     return;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
+                }
+                default -> System.out.println("Invalid choice. Please try again.");
             }
         }
     }
 
     private void getAllBooks(Scanner scanner) {
-        System.out.println("retrieving all books");
+        System.out.println("retrieving all books...");
 
         for (String i : bookQuantity.keySet()) {
             System.out.println("title: " + i + " quantity: " + bookQuantity.get(i));
